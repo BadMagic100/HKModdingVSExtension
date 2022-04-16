@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+    <TemplateData>
+        <Name>Automated Hollow Knight 1.5 Mod</Name>
+        <Description>A template for a Hollow Knight mod for version 1.5 using a highly automated build and release process</Description>
+        <Icon>__TemplateIcon.png</Icon>
+        <PreviewImage>__PreviewImage.png</PreviewImage>
+        <ProjectType>CSharp</ProjectType>
+        <LanguageTag>csharp</LanguageTag>
+        <SortOrder>1000</SortOrder>
+        <TemplateID>24f7ce7f-7788-4ad3-aa79-5336929a8cf7</TemplateID>
+        <CreateNewFolder>true</CreateNewFolder>
+        <DefaultName>My Hollow Knight Mod</DefaultName>
+        <ProvideDefaultName>true</ProvideDefaultName>
+        <LocationField>Enabled</LocationField>
+        <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+        <CreateInPlace>true</CreateInPlace>
+    </TemplateData>
+    <TemplateContent>
+        <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+            <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="$safeprojectname$.cs">ModClass.cs</ProjectItem>
+            <ProjectItem ReplaceParameters="true">LocalOverrides.targets</ProjectItem>
+            <ProjectItem>.gitignore</ProjectItem>
+            <ProjectItem ReplaceParameters="true">README.md</ProjectItem>
+            <ProjectItem ReplaceParameters="true">build.yml</ProjectItem>
+        </Project>
+    </TemplateContent>
+    <WizardExtension>
+        <Assembly>HKModWizard, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=1304ab62c76dcb83</Assembly>
+        <FullClassName>HKModWizard.SolutionSetupWizard</FullClassName>
+    </WizardExtension>
+</VSTemplate>

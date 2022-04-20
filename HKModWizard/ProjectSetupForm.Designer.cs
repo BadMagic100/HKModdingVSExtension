@@ -1,6 +1,6 @@
 ﻿namespace HKModWizard
 {
-    partial class UserInputForm
+    partial class ProjectSetupForm
     {
         /// <summary>
         /// Required designer variable.
@@ -165,13 +165,13 @@
             this.SubmitButton.UseVisualStyleBackColor = true;
             this.SubmitButton.Click += new System.EventHandler(this.Submit_Click);
             // 
-            // UserInputForm
+            // ProjectSetupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 450);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "UserInputForm";
+            this.Name = "ProjectSetupForm";
             this.ShowIcon = false;
             this.Text = "Configure Mod Project";
             this.Load += new System.EventHandler(this.UserInputForm_Load);

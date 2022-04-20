@@ -20,13 +20,13 @@
         <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
             <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="$safeprojectname$.cs">ModClass.cs</ProjectItem>
             <ProjectItem ReplaceParameters="true">LocalOverrides.targets</ProjectItem>
-            <ProjectItem>.gitignore</ProjectItem>
+            <ProjectItem TargetFileName=".gitignore">gitignore.template</ProjectItem>
             <ProjectItem ReplaceParameters="true">README.md</ProjectItem>
             <ProjectItem ReplaceParameters="true">build.yml</ProjectItem>
         </Project>
     </TemplateContent>
     <WizardExtension>
         <Assembly>HKModWizard, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=1304ab62c76dcb83</Assembly>
-        <FullClassName>HKModWizard.SolutionSetupWizard</FullClassName>
+        <FullClassName>HKModWizard.ProjectSetupWizard</FullClassName>
     </WizardExtension>
 </VSTemplate>

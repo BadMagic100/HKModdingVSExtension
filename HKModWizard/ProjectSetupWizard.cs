@@ -7,7 +7,7 @@ using System.IO;
 
 namespace HKModWizard
 {
-    public class SolutionSetupWizard : IWizard
+    public class ProjectSetupWizard : IWizard
     {
         DTE2 dte;
 
@@ -61,7 +61,7 @@ namespace HKModWizard
             buildYmlTargetPath = Path.Combine(solutionDir, ".github", "workflows", "build.yml");
             readmeTargetPath = Path.Combine(solutionDir, "README.md");
 
-            UserInputForm input = new UserInputForm();
+            ProjectSetupForm input = new ProjectSetupForm();
             input.ShowDialog();
 
             replacementsDictionary.Add("$hkmanaged$", input.HollowKnightManagedFolder);

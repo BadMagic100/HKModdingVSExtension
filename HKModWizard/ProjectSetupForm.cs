@@ -11,14 +11,14 @@ using System.Windows.Forms;
 
 namespace HKModWizard
 {
-    public partial class UserInputForm : Form
+    public partial class ProjectSetupForm : Form
     {
         public string Author => AuthorField.Text;
         public string Description => DescriptionField.Text;
         public string HollowKnightManagedFolder => InstallFolderField.Text;
         public bool Nullable => UseNullablesCheckbox.Checked;
 
-        public UserInputForm()
+        public ProjectSetupForm()
         {
             InitializeComponent();
         }

@@ -68,7 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="gitignore.template" />
-    <Content Include=".gitignore" />
     <Content Include="omegamaggotprime.ico" />
   </ItemGroup>
   <ItemGroup />

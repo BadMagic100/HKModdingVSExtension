@@ -3,8 +3,8 @@
     <TemplateData>
         <Name>Automated Hollow Knight 1.5 Mod</Name>
         <Description>A template for a Hollow Knight mod for version 1.5 using a highly automated build and release process</Description>
-        <Icon>__TemplateIcon.png</Icon>
-        <PreviewImage>__PreviewImage.png</PreviewImage>
+        <Icon>omegamaggotprime.ico</Icon>
+        <PreviewImage>omegamaggotprime.ico</PreviewImage>
         <ProjectType>CSharp</ProjectType>
         <LanguageTag>csharp</LanguageTag>
         <SortOrder>1000</SortOrder>

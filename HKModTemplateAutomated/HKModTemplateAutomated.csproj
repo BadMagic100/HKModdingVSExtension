@@ -69,8 +69,7 @@
   <ItemGroup>
     <None Include="gitignore.template" />
     <Content Include=".gitignore" />
-    <Content Include="__PreviewImage.png" />
-    <Content Include="__TemplateIcon.png" />
+    <Content Include="omegamaggotprime.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

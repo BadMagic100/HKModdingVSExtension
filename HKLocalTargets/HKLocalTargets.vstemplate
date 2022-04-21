@@ -3,7 +3,8 @@
     <TemplateData>
         <Name>Hollow Knight Targets</Name>
         <Description>A file that points the HollowKnightRefs variable to your local installation</Description>
-        <Icon>HKLocalTargets.ico</Icon>
+        <Icon>omegamaggotprime.ico</Icon>
+        <PreviewImage>omegamaggotprime.ico</PreviewImage>
         <TemplateID>2124e1bc-0f58-4851-8966-10650da248f6</TemplateID>
         <ProjectType>CSharp</ProjectType>
         <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>

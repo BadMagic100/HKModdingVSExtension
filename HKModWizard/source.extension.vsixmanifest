@@ -2,12 +2,17 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
         <Identity Id="HKModWizard.cc14a995-2ac7-4823-94ad-689ba19fcee5" Version="1.0" Language="en-US" Publisher="BadMagic100" />
-        <DisplayName>HKModWizard</DisplayName>
-        <Description xml:space="preserve">Adds a template to create a Hollow Knight 1.5 Mod with a highly automated build/release processAdds a </Description>
+        <DisplayName>HK 1.5 Modding Extension</DisplayName>
+        <Description xml:space="preserve">An extension to simplify and streamline the process of modding Hollow Knight</Description>
+        <Icon>omegamaggotprime.ico</Icon>
+        <PreviewImage>omegamaggotprime.ico</PreviewImage>
     </Metadata>
     <Installation>
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 18.0)">
             <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>x86</ProductArchitecture>
         </InstallationTarget>
     </Installation>
     <Dependencies>

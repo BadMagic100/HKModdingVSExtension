@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using VSLangProj;
 using DTEProj = EnvDTE.Project;
 using MSBProj = Microsoft.Build.Evaluation.Project;
@@ -26,7 +25,6 @@ namespace HKModWizard
         public const int CommandId = 0x0100;
 
         private static readonly string[] AllowedItemNames = { "*Dependencies", "ModDependencies.txt" };
-        private static readonly Regex modDepMatcher = new Regex(@"^\$\(HollowKnightRefs\)[\\/]Mods[\\/].*$");
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -179,15 +177,13 @@ namespace HKModWizard
                 //   * detecting currently installed mods from HollowKnightRefs
                 //   * detecting which of these are referenced already (things that have the same hintpath probably)
                 //   * select new items to be referenced
-                IEnumerable<ProjectItem> modReferences = msBuildProj.GetItems("Reference")
-                    .Where(r => r.DirectMetadata.Count(m => m.Name == "HintPath" && modDepMatcher.IsMatch(m.UnevaluatedValue)) == 1);
+                IEnumerable<ModReference> modReferences = msBuildProj.GetItems("Reference")
+                    .Select(x => ModReference.Parse(x))
+                    .Where(x => x != null);
 
                 // todo - add requested new items from dialog (maybe the dialog is responsible for this?)
                 // todo - manage the mods in ModDependencies.txt as well.
-                msBuildProj.AddItem("Reference", "ConnectionMetadataInjector", new Dictionary<string, string>
-                {
-                    ["HintPath"] = "$(HollowKnightRefs)/Mods/ConnectionMetadataInjector/ConnectionMetadataInjector.dll"
-                });
+                ModReference cmi = ModReference.AddToProject(msBuildProj, "ConnectionMetadataInjector", "ConnectionMetadataInjector.dll");
                 // todo - save only if dialogresult is ok
                 msBuildProj.Save();
 

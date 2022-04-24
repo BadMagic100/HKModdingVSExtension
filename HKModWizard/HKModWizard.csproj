@@ -59,6 +59,7 @@
       <DependentUpon>LocalOverridesSetupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LocalOverridesSetupWizard.cs" />
+    <Compile Include="ManageModDependenciesCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HKModWizardPackage.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -86,9 +87,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TemplateWizardInterface, Version=17.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -122,6 +126,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\omegamaggotprime-tiny.png" />
+    <VSCTCompile Include="HKModWizardPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
     <Content Include="omegamaggotprime.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

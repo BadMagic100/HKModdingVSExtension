@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -24,15 +25,17 @@ namespace HKModWizard
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    // using rule-based contexts doesn't allow querying for the Dependencies node - so we get to just wait for the package to load.
+    // as a side effect, this also means it's not possible to query for project type.
+    [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
     [Guid(HKModWizardPackage.PackageGuidString)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class HKModWizardPackage : AsyncPackage
     {
         /// <summary>
         /// HKModWizardPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "bb28c01d-beed-431a-b56e-c97967f06406";
-
-        #region Package Members
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
@@ -46,8 +49,7 @@ namespace HKModWizard
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            await ManageModDependenciesCommand.InitializeAsync(this);
         }
-
-        #endregion
     }
 }

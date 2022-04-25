@@ -24,12 +24,9 @@ namespace HKModWizard
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    // using rule-based contexts doesn't allow querying for the Dependencies node - so we get to just wait for the package to load.
-    // as a side effect, this also means it's not possible to query for project type.
-    // [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
-    [Guid(HKModWizardPackage.PackageGuidString)]
+    [Guid(PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideUIContextRule(HKModWizardPackage.ManageModDependenciesUIContextGuidString,
+    [ProvideUIContextRule(ManageModDependenciesUIContextGuidString,
         name: "Manage Mod Dependencies Context",
         expression: "IsCSharpProject",
         termNames: new[] { "IsCSharpProject" },

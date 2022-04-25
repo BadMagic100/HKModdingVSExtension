@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -27,15 +26,22 @@ namespace HKModWizard
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     // using rule-based contexts doesn't allow querying for the Dependencies node - so we get to just wait for the package to load.
     // as a side effect, this also means it's not possible to query for project type.
-    [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    // [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
     [Guid(HKModWizardPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
+    [ProvideUIContextRule(HKModWizardPackage.ManageModDependenciesUIContextGuidString,
+        name: "Manage Mod Dependencies Context",
+        expression: "IsCSharpProject",
+        termNames: new[] { "IsCSharpProject" },
+        termValues: new[] { "ActiveProjectCapability:CSharp"})]
     public sealed class HKModWizardPackage : AsyncPackage
     {
         /// <summary>
         /// HKModWizardPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "bb28c01d-beed-431a-b56e-c97967f06406";
+
+        public const string ManageModDependenciesUIContextGuidString = "19c186e1-5b13-4ef2-9179-dce649926617";
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place

@@ -24,8 +24,6 @@ namespace HKModWizard
         /// </summary>
         public const int CommandId = 0x0100;
 
-        private static readonly string[] AllowedItemNames = { "*Dependencies", "ModDependencies.txt" };
-
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
@@ -52,13 +50,14 @@ namespace HKModWizard
             this.monitorSelection = monitorSelection ?? throw new ArgumentNullException(nameof(monitorSelection));
 
             CommandID menuCommandID = new CommandID(CommandSet, CommandId);
-            OleMenuCommand menuItem = new OleMenuCommand(this.Execute, menuCommandID);
-            menuItem.BeforeQueryStatus += MenuItem_BeforeQueryStatus;
+            OleMenuCommand menuItem = new OleMenuCommand(Execute, menuCommandID);
+            // this is needed to let VS handle visibility via constraints
+            menuItem.Supported = false;
 
             commandService.AddCommand(menuItem);
         }
 
-        private (DTEProj selectedProj, string selectedItem) GetSelectedItemAndProject()
+        private DTEProj GetSelectedProject()
         {
             IntPtr hier = IntPtr.Zero;
             IntPtr container = IntPtr.Zero;
@@ -70,19 +69,13 @@ namespace HKModWizard
                 IVsMultiItemSelect mis = null;
                 ErrorHandler.ThrowOnFailure(monitorSelection.GetCurrentSelection(out hier, out itemId, out mis, out container));
 
-                // check that there's exactly one item selected
                 if (itemId != VSConstants.VSITEMID_NIL && // an item is selected and...
-                    itemId != VSConstants.VSITEMID_SELECTION && // multiple items are not selected and...
-                    hier != IntPtr.Zero && // we have a pointer to an actual hierarchy and...
-                    mis == null) // there's no multi-selection object (as a final redundancy)
+                    hier != IntPtr.Zero) // we have a pointer to a single hierarchy
                 {
-                    // now figure out what the item actually is so we can gate visibility
                     IVsHierarchy hierarchy = Marshal.GetObjectForIUnknown(hier) as IVsHierarchy;
-                    hierarchy.GetProperty(itemId, (int)__VSHPROPID.VSHPROPID_Name, out object selectedItemName);
-
                     hierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out object projRaw);
 
-                    return (projRaw as DTEProj, selectedItemName as string);
+                    return projRaw as DTEProj;
                 }
             }
             finally
@@ -96,26 +89,7 @@ namespace HKModWizard
                     Marshal.Release(container);
                 }
             }
-            return (null, null);
-        }
-
-        private void MenuItem_BeforeQueryStatus(object sender, EventArgs e)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            OleMenuCommand command = sender as OleMenuCommand;
-
-            (DTEProj proj, string selectedItem) = GetSelectedItemAndProject();
-
-            if (proj != null && selectedItem != null)
-            {
-                bool isAllowedItem = AllowedItemNames.Contains(selectedItem);
-                bool isCSharpProject = proj.Kind == PrjKind.prjKindCSharpProject;
-                command.Visible = isAllowedItem && isCSharpProject;
-            }
-            else
-            {
-                command.Visible = false;
-            }
+            return null;
         }
 
         /// <summary>
@@ -165,7 +139,7 @@ namespace HKModWizard
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            (DTEProj proj, string _) = GetSelectedItemAndProject();
+            DTEProj proj = GetSelectedProject();
 
             if (proj != null)
             {

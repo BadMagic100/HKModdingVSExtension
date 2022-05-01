@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HKModWizard.Util;
+using System;
 using System.Windows.Forms;
 
-namespace HKModWizard
+namespace HKModWizard.ProjectSetup
 {
     public partial class ProjectSetupForm : Form
     {

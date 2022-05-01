@@ -1,7 +1,8 @@
-﻿using System;
+﻿using HKModWizard.Util;
+using System;
 using System.Windows.Forms;
 
-namespace HKModWizard
+namespace HKModWizard.LocalOverridesSetup
 {
     public partial class LocalOverridesSetupForm : Form
     {

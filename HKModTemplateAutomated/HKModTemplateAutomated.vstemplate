@@ -27,6 +27,6 @@
     </TemplateContent>
     <WizardExtension>
         <Assembly>HKModWizard, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=1304ab62c76dcb83</Assembly>
-        <FullClassName>HKModWizard.ProjectSetupWizard</FullClassName>
+        <FullClassName>HKModWizard.ProjectSetup.ProjectSetupWizard</FullClassName>
     </WizardExtension>
 </VSTemplate>

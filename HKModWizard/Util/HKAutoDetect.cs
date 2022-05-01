@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace HKModWizard
+namespace HKModWizard.Util
 {
     // heavily referenced from Scarab installer. I have removed nullable annotations (because they're not supported in this template's language
     // version) and extracted PathUtil.ValidateWithSuffix to the FindManaged method.
@@ -90,7 +90,9 @@ namespace HKModWizard
                 line = line.TrimStart();
 
                 if (!line.StartsWith("\"path\""))
+                {
                     return null;
+                }
 
                 string[] pair = line.Split(new char[] { '\t' }, 2, StringSplitOptions.RemoveEmptyEntries);
 
@@ -135,12 +137,16 @@ namespace HKModWizard
         public static string FindManaged(string root)
         {
             if (!Directory.Exists(root))
+            {
                 return null;
+            }
 
             string suffix = SUFFIXES.FirstOrDefault(s => Directory.Exists(Path.Combine(root, s)));
 
             if (suffix is null || !File.Exists(Path.Combine(root, suffix, "Assembly-CSharp.dll")))
+            {
                 return null;
+            }
 
             return Path.Combine(root, suffix);
         }

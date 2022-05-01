@@ -1,4 +1,6 @@
 ﻿using Microsoft.Build.Evaluation;
+using Microsoft.Extensions.FileSystemGlobbing;
+using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -14,7 +16,7 @@ using DTEProj = EnvDTE.Project;
 using MSBProj = Microsoft.Build.Evaluation.Project;
 using Task = System.Threading.Tasks.Task;
 
-namespace HKModWizard
+namespace HKModWizard.ModDependenciesCommand
 {
     /// <summary>
     /// Command handler
@@ -159,6 +161,13 @@ namespace HKModWizard
                 MSBProj msBuildProj = new MSBProj(vsp.Project.FullName);
                 string hkRefs = msBuildProj.GetPropertyValue("HollowKnightRefs");
 
+                Matcher installedModMatcher = new Matcher();
+                installedModMatcher.AddInclude("Mods/*/*.dll");
+                PatternMatchingResult installedMods = installedModMatcher.Execute(new DirectoryInfoWrapper(new DirectoryInfo(hkRefs)));
+                IEnumerable<ModReference> availableModReferences = installedMods.Files
+                    .Select(f => f.Stem.Split('/'))
+                    .Select(f => ModReference.Construct(f[0], f[1]));
+
                 // todo - pass these to a dialog for handling. the dialog will be responsible for:
                 //   * detecting currently installed mods from HollowKnightRefs (maybe the command ought to do this as well?)
                 //   * detecting which of these are referenced already (things that have the same hintpath probably? include tag? folder name?)
@@ -169,7 +178,8 @@ namespace HKModWizard
 
                 // todo - add requested new items from dialog (from modlinks)
                 // todo - manage the mods in ModDependencies.txt as well.
-                // ModReference cmi = ModReference.AddToProject(msBuildProj, "ConnectionMetadataInjector", "ConnectionMetadataInjector.dll");
+                ModReference cmi = availableModReferences.First(r => r.ModFolderName == "ConnectionMetadataInjector");
+                bool success = cmi.AddToProject(msBuildProj);
                 // todo - save only if dialogresult is ok
                 // todo - add ModDependencies.txt as a projectitem if item is null
                 msBuildProj.Save();

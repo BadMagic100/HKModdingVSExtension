@@ -1,12 +1,8 @@
 ﻿using EnvDTE;
 using Microsoft.VisualStudio.TemplateWizard;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HKModWizard
+namespace HKModWizard.LocalOverridesSetup
 {
     internal class LocalOverridesSetupWizard : IWizard
     {

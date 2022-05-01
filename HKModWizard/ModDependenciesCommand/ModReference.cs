@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace HKModWizard
+namespace HKModWizard.ModDependenciesCommand
 {
     internal class ModReference
     {
@@ -42,18 +42,27 @@ namespace HKModWizard
             return null;
         }
 
-        public static ModReference AddToProject(Project project, string folderName, string modFileName)
+        public static ModReference Construct(string folderName, string modFileName)
+        {
+            string hintPath = $"$(HollowKnightRefs)/Mods/{folderName}/{modFileName}";
+            return new ModReference(null, hintPath, folderName, modFileName);
+        }
+
+        public bool AddToProject(Project project)
         {
             if (project != null)
             {
-                string hintPath = $"$(HollowKnightRefs)/Mods/{folderName}/{modFileName}";
-                ProjectItem addedItem = project.AddItem("Reference", modFileName.Replace(".dll", ""), new Dictionary<string, string>
+                ProjectItem addedItem = project.AddItem("Reference", ModDllName.Replace(".dll", ""), new Dictionary<string, string>
                 {
-                    ["HintPath"] = hintPath
+                    ["HintPath"] = HintPath
                 }).First();
-                return new ModReference(addedItem, hintPath, folderName, modFileName);
+                if (addedItem != null)
+                {
+                    ProjectItem = addedItem;
+                    return true;
+                }
             }
-            return null;
+            return false;
         }
     }
 }

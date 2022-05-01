@@ -1,4 +1,4 @@
-﻿namespace HKModWizard
+﻿namespace HKModWizard.ProjectSetup
 {
     partial class ProjectSetupForm
     {
@@ -60,6 +60,7 @@
             this.tableLayoutPanel1.Controls.Add(this.SubmitButton, 2, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -67,14 +68,14 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 450);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(780, 562);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // AuthorLabel
             // 
             this.AuthorLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.AuthorLabel.AutoSize = true;
-            this.AuthorLabel.Location = new System.Drawing.Point(97, 6);
+            this.AuthorLabel.Location = new System.Drawing.Point(97, 7);
             this.AuthorLabel.Name = "AuthorLabel";
             this.AuthorLabel.Size = new System.Drawing.Size(57, 20);
             this.AuthorLabel.TabIndex = 0;
@@ -84,7 +85,7 @@
             // 
             this.DescriptionLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.DescriptionLabel.AutoSize = true;
-            this.DescriptionLabel.Location = new System.Drawing.Point(65, 38);
+            this.DescriptionLabel.Location = new System.Drawing.Point(65, 41);
             this.DescriptionLabel.Name = "DescriptionLabel";
             this.DescriptionLabel.Size = new System.Drawing.Size(89, 20);
             this.DescriptionLabel.TabIndex = 1;
@@ -94,7 +95,7 @@
             // 
             this.InstallPathLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.InstallPathLabel.AutoSize = true;
-            this.InstallPathLabel.Location = new System.Drawing.Point(3, 70);
+            this.InstallPathLabel.Location = new System.Drawing.Point(3, 78);
             this.InstallPathLabel.Name = "InstallPathLabel";
             this.InstallPathLabel.Size = new System.Drawing.Size(151, 20);
             this.InstallPathLabel.TabIndex = 2;
@@ -104,18 +105,20 @@
             // 
             this.AuthorField.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::HKModWizard.Properties.Settings.Default, "Author", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AuthorField.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AuthorField.Location = new System.Drawing.Point(160, 3);
+            this.AuthorField.Location = new System.Drawing.Point(160, 4);
+            this.AuthorField.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AuthorField.Name = "AuthorField";
-            this.AuthorField.Size = new System.Drawing.Size(396, 26);
+            this.AuthorField.Size = new System.Drawing.Size(467, 26);
             this.AuthorField.TabIndex = 4;
             this.AuthorField.Text = global::HKModWizard.Properties.Settings.Default.Author;
             // 
             // DescriptionField
             // 
             this.DescriptionField.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DescriptionField.Location = new System.Drawing.Point(160, 35);
+            this.DescriptionField.Location = new System.Drawing.Point(160, 38);
+            this.DescriptionField.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.DescriptionField.Name = "DescriptionField";
-            this.DescriptionField.Size = new System.Drawing.Size(396, 26);
+            this.DescriptionField.Size = new System.Drawing.Size(467, 26);
             this.DescriptionField.TabIndex = 5;
             this.DescriptionField.Text = "A Hollow Knight mod that...";
             // 
@@ -125,7 +128,8 @@
             this.UseNullablesCheckbox.Checked = global::HKModWizard.Properties.Settings.Default.UseNullables;
             this.UseNullablesCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.UseNullablesCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::HKModWizard.Properties.Settings.Default, "UseNullables", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.UseNullablesCheckbox.Location = new System.Drawing.Point(562, 99);
+            this.UseNullablesCheckbox.Location = new System.Drawing.Point(633, 112);
+            this.UseNullablesCheckbox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.UseNullablesCheckbox.Name = "UseNullablesCheckbox";
             this.UseNullablesCheckbox.Size = new System.Drawing.Size(128, 24);
             this.UseNullablesCheckbox.TabIndex = 6;
@@ -136,18 +140,20 @@
             // 
             this.InstallFolderField.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::HKModWizard.Properties.Settings.Default, "HollowKnightManagedFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.InstallFolderField.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.InstallFolderField.Location = new System.Drawing.Point(160, 67);
+            this.InstallFolderField.Location = new System.Drawing.Point(160, 72);
+            this.InstallFolderField.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.InstallFolderField.Name = "InstallFolderField";
-            this.InstallFolderField.Size = new System.Drawing.Size(396, 26);
+            this.InstallFolderField.Size = new System.Drawing.Size(467, 26);
             this.InstallFolderField.TabIndex = 7;
             this.InstallFolderField.Text = global::HKModWizard.Properties.Settings.Default.HollowKnightManagedFolder;
             // 
             // InstallFolderBrowseButton
             // 
             this.InstallFolderBrowseButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.InstallFolderBrowseButton.Location = new System.Drawing.Point(562, 67);
+            this.InstallFolderBrowseButton.Location = new System.Drawing.Point(633, 72);
+            this.InstallFolderBrowseButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.InstallFolderBrowseButton.Name = "InstallFolderBrowseButton";
-            this.InstallFolderBrowseButton.Size = new System.Drawing.Size(128, 26);
+            this.InstallFolderBrowseButton.Size = new System.Drawing.Size(144, 32);
             this.InstallFolderBrowseButton.TabIndex = 8;
             this.InstallFolderBrowseButton.Text = "Browse";
             this.InstallFolderBrowseButton.UseVisualStyleBackColor = true;
@@ -156,10 +162,10 @@
             // SubmitButton
             // 
             this.SubmitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SubmitButton.Location = new System.Drawing.Point(613, 422);
-            this.SubmitButton.Margin = new System.Windows.Forms.Padding(5);
+            this.SubmitButton.Location = new System.Drawing.Point(690, 527);
+            this.SubmitButton.Margin = new System.Windows.Forms.Padding(6);
             this.SubmitButton.Name = "SubmitButton";
-            this.SubmitButton.Size = new System.Drawing.Size(75, 23);
+            this.SubmitButton.Size = new System.Drawing.Size(84, 29);
             this.SubmitButton.TabIndex = 9;
             this.SubmitButton.Text = "Submit";
             this.SubmitButton.UseVisualStyleBackColor = true;
@@ -167,10 +173,11 @@
             // 
             // ProjectSetupForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 450);
+            this.ClientSize = new System.Drawing.Size(780, 562);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "ProjectSetupForm";
             this.ShowIcon = false;
             this.Text = "Configure Mod Project";

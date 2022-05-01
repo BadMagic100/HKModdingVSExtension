@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TemplateWizard;
 using System.Collections.Generic;
 using System.IO;
 
-namespace HKModWizard
+namespace HKModWizard.ProjectSetup
 {
     public class ProjectSetupWizard : IWizard
     {

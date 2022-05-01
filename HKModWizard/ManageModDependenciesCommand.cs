@@ -5,9 +5,11 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using VSLangProj;
+using DTEItem = EnvDTE.ProjectItem;
 using DTEProj = EnvDTE.Project;
 using MSBProj = Microsoft.Build.Evaluation.Project;
 using Task = System.Threading.Tasks.Task;
@@ -143,22 +145,33 @@ namespace HKModWizard
 
             if (proj != null)
             {
+                DTEItem item = proj.ProjectItems.Item("ModDependencies.txt");
+                IEnumerable<ModDependencyLineItem> existingModDependencies = Enumerable.Empty<ModDependencyLineItem>();
+                if (item != null)
+                {
+                    using (StreamReader sr = File.OpenText(item.FileNames[0]))
+                    {
+                        existingModDependencies = sr.ReadToEnd().Split('\n').Select(s => ModDependencyLineItem.Parse(s));
+                    }
+                }
+
                 VSProject vsp = proj.Object as VSProject;
                 MSBProj msBuildProj = new MSBProj(vsp.Project.FullName);
                 string hkRefs = msBuildProj.GetPropertyValue("HollowKnightRefs");
 
                 // todo - pass these to a dialog for handling. the dialog will be responsible for:
-                //   * detecting currently installed mods from HollowKnightRefs
-                //   * detecting which of these are referenced already (things that have the same hintpath probably)
+                //   * detecting currently installed mods from HollowKnightRefs (maybe the command ought to do this as well?)
+                //   * detecting which of these are referenced already (things that have the same hintpath probably? include tag? folder name?)
                 //   * select new items to be referenced
-                IEnumerable<ModReference> modReferences = msBuildProj.GetItems("Reference")
+                IEnumerable<ModReference> existingModReferences = msBuildProj.GetItems("Reference")
                     .Select(x => ModReference.Parse(x))
                     .Where(x => x != null);
 
-                // todo - add requested new items from dialog (maybe the dialog is responsible for this?)
+                // todo - add requested new items from dialog (from modlinks)
                 // todo - manage the mods in ModDependencies.txt as well.
-                ModReference cmi = ModReference.AddToProject(msBuildProj, "ConnectionMetadataInjector", "ConnectionMetadataInjector.dll");
+                // ModReference cmi = ModReference.AddToProject(msBuildProj, "ConnectionMetadataInjector", "ConnectionMetadataInjector.dll");
                 // todo - save only if dialogresult is ok
+                // todo - add ModDependencies.txt as a projectitem if item is null
                 msBuildProj.Save();
 
                 ProjectCollection.GlobalProjectCollection.UnloadAllProjects();

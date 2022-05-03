@@ -1,11 +1,12 @@
 ﻿using Microsoft.Build.Evaluation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace HKModWizard.ModDependenciesCommand
 {
-    internal class ModReference
+    public class ModReference : IEquatable<ModReference>
     {
         private static readonly Regex modDepMatcher = new Regex(@"^\$\(HollowKnightRefs\)[\\/]Mods[\\/](?<Folder>.*)[\\/](?<ModName>.*\.dll)$");
 
@@ -20,7 +21,7 @@ namespace HKModWizard.ModDependenciesCommand
         private ModReference(ProjectItem item, string hintPath, string folderName, string dllName)
         {
             ProjectItem = item;
-            HintPath = hintPath;
+            HintPath = hintPath.Replace('\\', '/'); // normalize slashes - forward is better
             ModFolderName = folderName;
             ModDllName = dllName;
         }
@@ -63,6 +64,38 @@ namespace HKModWizard.ModDependenciesCommand
                 }
             }
             return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ModReference);
+        }
+
+        public bool Equals(ModReference other)
+        {
+            return other != null &&
+                   HintPath == other.HintPath &&
+                   ModFolderName == other.ModFolderName &&
+                   ModDllName == other.ModDllName;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -1453628066;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(HintPath);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ModFolderName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ModDllName);
+            return hashCode;
+        }
+
+        public static bool operator ==(ModReference left, ModReference right)
+        {
+            return EqualityComparer<ModReference>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(ModReference left, ModReference right)
+        {
+            return !(left == right);
         }
     }
 }

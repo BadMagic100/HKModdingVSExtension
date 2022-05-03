@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HKModWizard.ModDependenciesCommand
 {
-    internal class ModDependencyLineItem
+    public class ModDependencyLineItem : IEquatable<ModDependencyLineItem>
     {
         private const string TOKEN_AS = "as";
         private const string TOKEN_FROM = "from";
@@ -11,6 +12,17 @@ namespace HKModWizard.ModDependenciesCommand
         public string ModAlias { get; set; }
         public string DirectLink { get; set; }
         public string Comment { get; set; }
+
+        public bool IsComment
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(Comment)
+                    && string.IsNullOrEmpty(ModName)
+                    && string.IsNullOrEmpty(ModAlias)
+                    && string.IsNullOrEmpty(DirectLink);
+            }
+        }
 
         public override string ToString()
         {
@@ -108,6 +120,40 @@ namespace HKModWizard.ModDependenciesCommand
                 result.Comment = comment;
             }
             return result;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ModDependencyLineItem);
+        }
+
+        public bool Equals(ModDependencyLineItem other)
+        {
+            return other != null &&
+                   ModName == other.ModName &&
+                   ModAlias == other.ModAlias &&
+                   DirectLink == other.DirectLink &&
+                   Comment == other.Comment;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -1120534817;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ModName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ModAlias);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(DirectLink);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Comment);
+            return hashCode;
+        }
+
+        public static bool operator ==(ModDependencyLineItem left, ModDependencyLineItem right)
+        {
+            return EqualityComparer<ModDependencyLineItem>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(ModDependencyLineItem left, ModDependencyLineItem right)
+        {
+            return !(left == right);
         }
     }
 }

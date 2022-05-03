@@ -144,7 +144,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Resources\omegamaggotprime-tiny.png" />
+    <Resource Include="Resources\omegamaggotprime-tiny.png" />
     <VSCTCompile Include="HKModWizardPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>

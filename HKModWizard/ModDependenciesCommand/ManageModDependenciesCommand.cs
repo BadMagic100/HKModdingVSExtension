@@ -168,21 +168,25 @@ namespace HKModWizard.ModDependenciesCommand
                     .Select(f => f.Stem.Split('/'))
                     .Select(f => ModReference.Construct(f[0], f[1]));
 
-                // todo - pass these to a dialog for handling. the dialog will be responsible for:
-                //   * detecting currently installed mods from HollowKnightRefs (maybe the command ought to do this as well?)
-                //   * detecting which of these are referenced already (things that have the same hintpath probably? include tag? folder name?)
-                //   * select new items to be referenced
                 IEnumerable<ModReference> existingModReferences = msBuildProj.GetItems("Reference")
                     .Select(x => ModReference.Parse(x))
                     .Where(x => x != null);
 
-                // todo - add requested new items from dialog (from modlinks)
-                // todo - manage the mods in ModDependencies.txt as well.
+                // so what's left to be done??
+                // ModReference is a reference to a mod in the csproj. The dialog is responsible for managing these,
+                // as well reconciling with ModDependencies.txt.
+                // - if a dependency is referenced in the csproj but not moddependencies, warn user, help them add it
+                // - if a dependency is referenced in moddependencies but not the csproj, warn user, help them add it
+                // - allow user to add available ModReferences to the project, and help them add it to ModDependencies.
+
                 ModReference cmi = availableModReferences.First(r => r.ModFolderName == "ConnectionMetadataInjector");
                 bool success = cmi.AddToProject(msBuildProj);
-                // todo - save only if dialogresult is ok
-                // todo - add ModDependencies.txt as a projectitem if item is null
-                msBuildProj.Save();
+                ManageModDependenciesForm form = new ManageModDependenciesForm(availableModReferences, existingModReferences, existingModDependencies);
+                if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    // todo - add ModDependencies.txt as a projectitem if item is null
+                    msBuildProj.Save();
+                }
 
                 ProjectCollection.GlobalProjectCollection.UnloadAllProjects();
             }

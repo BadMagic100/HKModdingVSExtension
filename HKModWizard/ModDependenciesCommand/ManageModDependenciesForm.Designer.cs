@@ -208,7 +208,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ManageModDependenciesForm";
             this.Text = "Manage Mod Dependencies";
-            this.Load += new System.EventHandler(this.ManageModDependenciesForm_Load);
+            this.Load += new System.EventHandler(this.OnReady);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);

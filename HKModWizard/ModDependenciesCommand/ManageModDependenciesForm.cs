@@ -86,7 +86,7 @@ namespace HKModWizard.ModDependenciesCommand
                 bool isLast = checkedSharedItems.Count() == 1 && checkedSharedItems.First() == referenceList.Items[e.Index];
                 IEnumerable<ListViewItem> found = modDepsList.Items.OfType<ListViewItem>()
                     .Where(item => item.Tag is ModDependencyLineItem dep && MatchReferenceToName(dep, inferredModName));
-                if (isLast && found != null)
+                if (isLast && found.Count() > 0)
                 {                    
                     foreach (ListViewItem item in found)
                     {
@@ -97,10 +97,20 @@ namespace HKModWizard.ModDependenciesCommand
             }
         }
 
-        private void ManageModDependenciesForm_Load(object sender, EventArgs e)
+        private void OnReady(object sender, EventArgs e)
         {
             // only start doing this once the form is actually loaded and ready
             referenceList.ItemCheck += ReferenceListSelectionWillChange;
+        }
+
+        private void FixInconsistencies(object sender, EventArgs e)
+        {
+            // step 1 - look at our existing references. If mod deps is missing it, add it automatically
+            // step 2 - look at our existing mod deps. If no selected reference matches, and any unselected references match, select them.
+            //   2b - If no available reference matches, issue a warning for later reporting.
+            //        Either their local alias is incorrect, they are missing the mod locally, or they should remove the dependency entirely
+            // step 3 - check mod deps for duplicate keys; this will cause undefined behavior in the action. issue warnings later
+            // step 4 - report warnings
         }
     }
 }

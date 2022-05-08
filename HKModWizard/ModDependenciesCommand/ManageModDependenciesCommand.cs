@@ -177,7 +177,6 @@ namespace HKModWizard.ModDependenciesCommand
                 // as well reconciling with ModDependencies.txt.
                 // - if a dependency is referenced in the csproj but not moddependencies, warn user, help them add it
                 // - if a dependency is referenced in moddependencies but not the csproj, warn user, help them add it
-                // - allow user to add available ModReferences to the project, and help them add it to ModDependencies.
 
                 ModReference cmi = availableModReferences.First(r => r.ModFolderName == "ConnectionMetadataInjector");
                 bool success = cmi.AddToProject(msBuildProj);

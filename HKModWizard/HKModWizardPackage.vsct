@@ -16,17 +16,14 @@
 
         <Buttons>
             <Button guid="guidHKModWizardPackageCmdSet" id="ManageModDependenciesCommandId" type="Button">
-                <Icon guid="guidImages" id="omegamaggotprime" />
+                <Icon guid="HKIconsMoniker" id="hkmask"/>
+                <CommandFlag>IconIsMoniker</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>Manage Mod Dependencies</ButtonText>
                 </Strings>
             </Button>
         </Buttons>
-
-        <Bitmaps>
-            <Bitmap guid="guidImages" href="Resources\Knight_mask_black_v2.png" usedList="omegamaggotprime"/>
-        </Bitmaps>
     </Commands>
 
     <CommandPlacements>
@@ -58,8 +55,8 @@
             <IDSymbol name="ManageModDependenciesCommandId" value="0x0100" />
         </GuidSymbol>
 
-        <GuidSymbol name="guidImages" value="{c15d9dac-41f6-4b40-b7b4-dce4939207d7}" >
-            <IDSymbol name="omegamaggotprime" value="1" />
+        <GuidSymbol name="HKIconsMoniker" value="{e08b08c1-6fb0-4be4-8228-62eb198b2bd7}">
+            <IDSymbol name="hkmask" value="1" />
         </GuidSymbol>
     </Symbols>
 </CommandTable>

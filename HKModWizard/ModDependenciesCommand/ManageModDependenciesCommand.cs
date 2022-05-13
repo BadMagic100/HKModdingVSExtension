@@ -10,6 +10,7 @@ using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows;
 using VSLangProj;
 using DTEItem = EnvDTE.ProjectItem;
 using DTEProj = EnvDTE.Project;
@@ -147,11 +148,11 @@ namespace HKModWizard.ModDependenciesCommand
 
             if (proj != null)
             {
-                DTEItem item = proj.ProjectItems.Item("ModDependencies.txt");
+                DTEItem depsItem = proj.ProjectItems.Item("ModDependencies.txt");
                 IEnumerable<ModDependencyLineItem> existingModDependencies = Enumerable.Empty<ModDependencyLineItem>();
-                if (item != null)
+                if (depsItem != null)
                 {
-                    using (StreamReader sr = File.OpenText(item.FileNames[0]))
+                    using (StreamReader sr = File.OpenText(depsItem.FileNames[0]))
                     {
                         existingModDependencies = sr.ReadToEnd().Split('\n').Select(s => ModDependencyLineItem.Parse(s));
                     }
@@ -172,19 +173,45 @@ namespace HKModWizard.ModDependenciesCommand
                     .Select(x => ModReference.Parse(x))
                     .Where(x => x != null);
 
-                // so what's left to be done??
-                // ModReference is a reference to a mod in the csproj. The dialog is responsible for managing these,
-                // as well reconciling with ModDependencies.txt.
-                // - if a dependency is referenced in the csproj but not moddependencies, warn user, help them add it
-                // - if a dependency is referenced in moddependencies but not the csproj, warn user, help them add it
-
-                ModReference cmi = availableModReferences.First(r => r.ModFolderName == "ConnectionMetadataInjector");
-                bool success = cmi.AddToProject(msBuildProj);
                 ManageModDependenciesForm form = new ManageModDependenciesForm(availableModReferences, existingModReferences, existingModDependencies);
                 if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    // todo - add ModDependencies.txt as a projectitem if item is null
-                    msBuildProj.Save();
+                    // todo - need a way to return and consume "action" values - add/remove refs from project, save ModDeps.txt
+                    var tst = form.ReferenceActions.Where(x => x.enable != (x.reference.ProjectItem != null)).Count();
+                    bool referenceResult = true;
+                    foreach ((bool enable, ModReference reference) in form.ReferenceActions)
+                    {
+                        if (enable && reference.ProjectItem == null)
+                        {
+                            referenceResult &= reference.AddToProject(msBuildProj);
+                        }
+                        else if (!enable && reference.ProjectItem != null)
+                        {
+                            referenceResult &= msBuildProj.RemoveItem(reference.ProjectItem);
+                        }
+                    }
+                    if (referenceResult)
+                    {
+                        msBuildProj.Save();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error editing project references. Project was not saved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                    string textContent = string.Join(Environment.NewLine, form.ModDependencies);
+                    string path = depsItem != null ? depsItem.FileNames[0] : Path.Combine(Path.GetDirectoryName(proj.FullName), "ModDependencies.txt");
+                    using (FileStream fs = File.OpenWrite(path))
+                    {
+                        using (StreamWriter sw = new StreamWriter(fs))
+                        {
+                            sw.Write(textContent);
+                        }
+                    }
+                    if (depsItem == null)
+                    {
+                        proj.ProjectItems.AddFromFile(path);
+                    }
                 }
 
                 ProjectCollection.GlobalProjectCollection.UnloadAllProjects();

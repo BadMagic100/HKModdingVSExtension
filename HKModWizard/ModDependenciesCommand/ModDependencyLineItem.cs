@@ -17,8 +17,7 @@ namespace HKModWizard.ModDependenciesCommand
         {
             get
             {
-                return !string.IsNullOrEmpty(Comment)
-                    && string.IsNullOrEmpty(ModName)
+                return string.IsNullOrEmpty(ModName)
                     && string.IsNullOrEmpty(ModAlias)
                     && string.IsNullOrEmpty(DirectLink);
             }

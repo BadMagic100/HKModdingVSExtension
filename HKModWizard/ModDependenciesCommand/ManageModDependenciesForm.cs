@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -8,6 +9,12 @@ namespace HKModWizard.ModDependenciesCommand
     public partial class ManageModDependenciesForm : Form
     {
         private readonly List<ModDependencyLineItem> modDeps;
+
+        public IEnumerable<(bool enable, ModReference reference)> ReferenceActions => referenceList.Items.OfType<ListViewItem>()
+            .Where(item => item.Tag is ModReference)
+            .Select(item => (item.Checked, item.Tag as ModReference));
+
+        public IEnumerable<ModDependencyLineItem> ModDependencies => modDeps.ToImmutableList();
 
         public ManageModDependenciesForm(IEnumerable<ModReference> availableMods, 
             IEnumerable<ModReference> referencedMods, 
@@ -142,9 +149,13 @@ namespace HKModWizard.ModDependenciesCommand
                         .Where(i => i.Tag is ModReference r && r.ModFolderName == GetFolderName(dep));
                     if (refs.Any())
                     {
-                        foreach (ListViewItem r in refs)
+                        // if some are checked already, don't go check the others - it's assumed we probably don't want them.
+                        if (!refs.Any(r => r.Checked))
                         {
-                            r.Checked = true;
+                            foreach (ListViewItem r in refs)
+                            {
+                                r.Checked = true;
+                            }
                         }
                     }
                     else

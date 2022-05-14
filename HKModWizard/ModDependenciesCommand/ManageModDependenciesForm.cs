@@ -196,8 +196,13 @@ namespace HKModWizard.ModDependenciesCommand
 
             if (errorListProvider.Tasks.Count > 0)
             {
-                MessageBox.Show(this, "Found some potential issues. Once your changes are saved, check the error list for details.", "Warning",
+                MessageBox.Show(this, "Found some potential issues. Once your changes are saved, check the error list for details. " +
+                    "You can clear the error list from this dialog once they are fixed.", "Warning",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show(this, "No issues remaining!", "No Warnings", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -229,12 +234,6 @@ namespace HKModWizard.ModDependenciesCommand
                                 r.Checked = true;
                             }
                         }
-                    }
-                    else
-                    {
-                        string warning = $"The dependency on '{dep.ModName}' does not match any installed mods. " +
-                                $"Your local alias may be incorrect, or the mod may not be installed at all.";
-                        errorListProvider.Tasks.Add(MakeWarning(warning, modDeps.IndexOf(dep)));
                     }
                 }
             }

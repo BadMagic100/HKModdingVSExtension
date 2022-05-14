@@ -43,6 +43,7 @@
             this.modDownloadHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.rectifyButton = new System.Windows.Forms.Button();
+            this.errorCheck = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -76,10 +77,10 @@
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.cancelButton);
             this.flowLayoutPanel1.Controls.Add(this.submitButton);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(579, 328);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(559, 322);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(129, 30);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(149, 36);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // cancelButton
@@ -87,10 +88,9 @@
             this.cancelButton.AutoSize = true;
             this.cancelButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(3, 2);
-            this.cancelButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cancelButton.Location = new System.Drawing.Point(3, 3);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(59, 26);
+            this.cancelButton.Size = new System.Drawing.Size(68, 30);
             this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -100,10 +100,9 @@
             this.submitButton.AutoSize = true;
             this.submitButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.submitButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.submitButton.Location = new System.Drawing.Point(68, 2);
-            this.submitButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.submitButton.Location = new System.Drawing.Point(77, 3);
             this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(58, 26);
+            this.submitButton.Size = new System.Drawing.Size(69, 30);
             this.submitButton.TabIndex = 1;
             this.submitButton.Text = "Submit";
             this.submitButton.UseVisualStyleBackColor = true;
@@ -124,8 +123,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.modDepsList);
-            this.splitContainer1.Size = new System.Drawing.Size(705, 322);
-            this.splitContainer1.SplitterDistance = 190;
+            this.splitContainer1.Size = new System.Drawing.Size(705, 316);
+            this.splitContainer1.SplitterDistance = 185;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -140,7 +139,7 @@
             this.referenceList.Location = new System.Drawing.Point(0, 0);
             this.referenceList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.referenceList.Name = "referenceList";
-            this.referenceList.Size = new System.Drawing.Size(705, 190);
+            this.referenceList.Size = new System.Drawing.Size(705, 185);
             this.referenceList.TabIndex = 0;
             this.referenceList.UseCompatibleStateImageBehavior = false;
             this.referenceList.View = System.Windows.Forms.View.Details;
@@ -166,7 +165,7 @@
             this.modDepsList.Location = new System.Drawing.Point(0, 0);
             this.modDepsList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.modDepsList.Name = "modDepsList";
-            this.modDepsList.Size = new System.Drawing.Size(705, 129);
+            this.modDepsList.Size = new System.Drawing.Size(705, 128);
             this.modDepsList.TabIndex = 0;
             this.modDepsList.UseCompatibleStateImageBehavior = false;
             this.modDepsList.View = System.Windows.Forms.View.Details;
@@ -191,24 +190,36 @@
             this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel2.AutoSize = true;
             this.flowLayoutPanel2.Controls.Add(this.rectifyButton);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 328);
+            this.flowLayoutPanel2.Controls.Add(this.errorCheck);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 322);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(135, 30);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(276, 36);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
             // rectifyButton
             // 
             this.rectifyButton.AutoSize = true;
             this.rectifyButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.rectifyButton.Location = new System.Drawing.Point(3, 2);
-            this.rectifyButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rectifyButton.Location = new System.Drawing.Point(3, 3);
             this.rectifyButton.Name = "rectifyButton";
-            this.rectifyButton.Size = new System.Drawing.Size(129, 26);
+            this.rectifyButton.Size = new System.Drawing.Size(153, 30);
             this.rectifyButton.TabIndex = 0;
             this.rectifyButton.Text = "Fix Inconsistencies";
             this.rectifyButton.UseVisualStyleBackColor = true;
             this.rectifyButton.Click += new System.EventHandler(this.FixInconsistencies);
+            // 
+            // errorCheck
+            // 
+            this.errorCheck.AutoSize = true;
+            this.errorCheck.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.errorCheck.Location = new System.Drawing.Point(162, 3);
+            this.errorCheck.Name = "errorCheck";
+            this.errorCheck.Size = new System.Drawing.Size(111, 30);
+            this.errorCheck.TabIndex = 1;
+            this.errorCheck.Text = "Check Errors";
+            this.errorCheck.UseVisualStyleBackColor = true;
+            this.errorCheck.Click += new System.EventHandler(this.CheckErrors);
             // 
             // ManageModDependenciesForm
             // 
@@ -251,5 +262,6 @@
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button rectifyButton;
+        private System.Windows.Forms.Button errorCheck;
     }
 }

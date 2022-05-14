@@ -40,7 +40,9 @@ namespace HKModWizard.ModDependenciesCommand
         private readonly AsyncPackage package;
 
         private readonly IMenuCommandService commandService;
+        private readonly IVsSolution solution;
         private readonly IVsMonitorSelection monitorSelection;
+        private readonly ErrorListProvider errorListProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ManageModDependenciesCommand"/> class.
@@ -48,11 +50,14 @@ namespace HKModWizard.ModDependenciesCommand
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private ManageModDependenciesCommand(AsyncPackage package, IMenuCommandService commandService, IVsMonitorSelection monitorSelection)
+        private ManageModDependenciesCommand(AsyncPackage package, IMenuCommandService commandService, IVsSolution solutionService,
+            IVsMonitorSelection monitorSelection)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             this.commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             this.monitorSelection = monitorSelection ?? throw new ArgumentNullException(nameof(monitorSelection));
+            this.solution = solutionService ?? throw new ArgumentNullException(nameof(solutionService));
+            this.errorListProvider = new ErrorListProvider(package);
 
             CommandID menuCommandID = new CommandID(CommandSet, CommandId);
             OleMenuCommand menuItem = new OleMenuCommand(Execute, menuCommandID);
@@ -128,9 +133,10 @@ namespace HKModWizard.ModDependenciesCommand
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             IMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as IMenuCommandService;
+            IVsSolution solutionService = await package.GetServiceAsync(typeof(IVsSolution)) as IVsSolution;
             IVsMonitorSelection monitorSelection = await package.GetServiceAsync(typeof(IVsMonitorSelection)) as IVsMonitorSelection;
 
-            Instance = new ManageModDependenciesCommand(package, commandService, monitorSelection);
+            Instance = new ManageModDependenciesCommand(package, commandService, solutionService, monitorSelection);
         }
 
         /// <summary>
@@ -149,6 +155,7 @@ namespace HKModWizard.ModDependenciesCommand
             if (proj != null)
             {
                 DTEItem depsItem = proj.ProjectItems.Item("ModDependencies.txt");
+                string depsItemPath = depsItem != null ? depsItem.FileNames[0] : Path.Combine(Path.GetDirectoryName(proj.FullName), "ModDependencies.txt");
                 IEnumerable<ModDependencyLineItem> existingModDependencies = Enumerable.Empty<ModDependencyLineItem>();
                 if (depsItem != null)
                 {
@@ -157,6 +164,8 @@ namespace HKModWizard.ModDependenciesCommand
                         existingModDependencies = sr.ReadToEnd().Split('\n').Select(s => ModDependencyLineItem.Parse(s));
                     }
                 }
+
+                solution.GetProjectOfUniqueName(proj.UniqueName, out IVsHierarchy projectHierarchy);
 
                 VSProject vsp = proj.Object as VSProject;
                 MSBProj msBuildProj = new MSBProj(vsp.Project.FullName);
@@ -173,11 +182,10 @@ namespace HKModWizard.ModDependenciesCommand
                     .Select(x => ModReference.Parse(x))
                     .Where(x => x != null);
 
-                ManageModDependenciesForm form = new ManageModDependenciesForm(availableModReferences, existingModReferences, existingModDependencies);
+                ManageModDependenciesForm form = new ManageModDependenciesForm(availableModReferences, existingModReferences,
+                    existingModDependencies, errorListProvider, projectHierarchy, depsItemPath);
                 if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    // todo - need a way to return and consume "action" values - add/remove refs from project, save ModDeps.txt
-                    var tst = form.ReferenceActions.Where(x => x.enable != (x.reference.ProjectItem != null)).Count();
                     bool referenceResult = true;
                     foreach ((bool enable, ModReference reference) in form.ReferenceActions)
                     {
@@ -200,8 +208,7 @@ namespace HKModWizard.ModDependenciesCommand
                     }
 
                     string textContent = string.Join(Environment.NewLine, form.ModDependencies);
-                    string path = depsItem != null ? depsItem.FileNames[0] : Path.Combine(Path.GetDirectoryName(proj.FullName), "ModDependencies.txt");
-                    using (FileStream fs = File.OpenWrite(path))
+                    using (FileStream fs = File.OpenWrite(depsItemPath))
                     {
                         using (StreamWriter sw = new StreamWriter(fs))
                         {
@@ -210,8 +217,17 @@ namespace HKModWizard.ModDependenciesCommand
                     }
                     if (depsItem == null)
                     {
-                        proj.ProjectItems.AddFromFile(path);
+                        proj.ProjectItems.AddFromFile(depsItemPath);
                     }
+
+                    if (errorListProvider.Tasks.Count > 0)
+                    {
+                        errorListProvider.Show();
+                    }
+                }
+                else
+                {
+                    errorListProvider.Tasks.Clear();
                 }
 
                 ProjectCollection.GlobalProjectCollection.UnloadAllProjects();

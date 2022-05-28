@@ -139,6 +139,20 @@ namespace HKModWizard.ModDependenciesCommand
             Instance = new ManageModDependenciesCommand(package, commandService, solutionService, monitorSelection);
         }
 
+        private DTEItem TryGetItem(DTEProj proj, string item)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            try
+            {
+                return proj.ProjectItems.Item(item);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// This function is the callback used to execute the command when the menu item is clicked.
         /// See the constructor to see how the menu item is associated with this function using
@@ -154,7 +168,7 @@ namespace HKModWizard.ModDependenciesCommand
 
             if (proj != null)
             {
-                DTEItem depsItem = proj.ProjectItems.Item("ModDependencies.txt");
+                DTEItem depsItem = TryGetItem(proj, "ModDependencies.txt");
                 string depsItemPath = depsItem != null ? depsItem.FileNames[0] : Path.Combine(Path.GetDirectoryName(proj.FullName), "ModDependencies.txt");
                 IEnumerable<ModDependencyLineItem> existingModDependencies = Enumerable.Empty<ModDependencyLineItem>();
                 if (depsItem != null)
@@ -168,12 +182,29 @@ namespace HKModWizard.ModDependenciesCommand
                 solution.GetProjectOfUniqueName(proj.UniqueName, out IVsHierarchy projectHierarchy);
 
                 VSProject vsp = proj.Object as VSProject;
+                ProjectCollection.GlobalProjectCollection.UnloadAllProjects();
                 MSBProj msBuildProj = new MSBProj(vsp.Project.FullName);
                 string hkRefs = msBuildProj.GetPropertyValue("HollowKnightRefs");
 
+                if (string.IsNullOrEmpty(hkRefs))
+                {
+                    VsShellUtilities.ShowMessageBox(this.package, "The HollowKnightRefs variable is not defined for this project.",
+                        "Couldn't detect mod installation", OLEMSGICON.OLEMSGICON_WARNING, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+                    return;
+                }
+
                 Matcher installedModMatcher = new Matcher();
+                DirectoryInfo hkRefsDir = new DirectoryInfo(hkRefs);
+
+                if (!hkRefsDir.Exists)
+                {
+                    VsShellUtilities.ShowMessageBox(this.package, "The HollowKnightRefs variable defined for this project does not point to a valid folder.",
+                        "Couldn't detect mod installation", OLEMSGICON.OLEMSGICON_WARNING, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+                    return;
+                }
+
                 installedModMatcher.AddInclude("Mods/*/*.dll");
-                PatternMatchingResult installedMods = installedModMatcher.Execute(new DirectoryInfoWrapper(new DirectoryInfo(hkRefs)));
+                PatternMatchingResult installedMods = installedModMatcher.Execute(new DirectoryInfoWrapper(hkRefsDir));
                 IEnumerable<ModReference> availableModReferences = installedMods.Files
                     .Select(f => f.Stem.Split('/'))
                     .Select(f => ModReference.Construct(f[0], f[1]));

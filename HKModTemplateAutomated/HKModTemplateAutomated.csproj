@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="gitignore.template" />
+    <VSTemplate Include="HKLocalTargets.vstemplate" />
     <Content Include="omegamaggotprime.ico" />
   </ItemGroup>
   <ItemGroup />

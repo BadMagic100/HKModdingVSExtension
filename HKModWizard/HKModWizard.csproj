@@ -124,17 +124,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HKLocalTargets\HKLocalTargets.csproj">
-      <Project>{51E5C12B-63D2-4D3A-A25E-37A8D5801960}</Project>
-      <Name>HKLocalTargets</Name>
-      <VSIXSubPath>ItemTemplates</VSIXSubPath>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-    </ProjectReference>
     <ProjectReference Include="..\HKModTemplateAutomated\HKModTemplateAutomated.csproj">
       <Project>{DBB69944-4985-4EF4-9FC4-D8346907BDA1}</Project>
       <Name>HKModTemplateAutomated</Name>
-      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>

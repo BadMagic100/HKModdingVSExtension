@@ -51,6 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HKSettings.cs" />
     <Compile Include="ModDependenciesCommand\ManageModDependenciesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,11 +71,6 @@
     <Compile Include="ModDependenciesCommand\ModReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HKModWizardPackage.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="ProjectSetup\ProjectSetupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,10 +85,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="key.snk" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

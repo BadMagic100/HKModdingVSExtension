@@ -11,15 +11,26 @@ namespace HKModWizard.ProjectSetup
         public string HollowKnightManagedFolder => InstallFolderField.Text;
         public bool Nullable => UseNullablesCheckbox.Checked;
 
-        public ProjectSetupForm()
+        public ProjectSetupForm(HKSettings settings)
         {
             InitializeComponent();
+
+            AuthorField.DataBindings.Add(new Binding(nameof(AuthorField.Text), settings, nameof(settings.Author), 
+                false, DataSourceUpdateMode.OnPropertyChanged));
+            AuthorField.Text = settings.Author;
+
+            InstallFolderField.DataBindings.Add(new Binding(nameof(InstallFolderField.Text), settings, nameof(settings.HKManagedPath), 
+                false, DataSourceUpdateMode.OnPropertyChanged));
+            InstallFolderField.Text = settings.HKManagedPath;
+
+            UseNullablesCheckbox.DataBindings.Add(new Binding(nameof(UseNullablesCheckbox.Checked), settings, nameof(settings.UseNullables),
+                false, DataSourceUpdateMode.OnPropertyChanged));
+            UseNullablesCheckbox.Checked = settings.UseNullables;
         }
 
         private void Submit_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            Properties.Settings.Default.Save();
             Close();
         }
 

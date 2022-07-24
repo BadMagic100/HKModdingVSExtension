@@ -8,9 +8,12 @@ namespace HKModWizard.LocalOverridesSetup
     {
         public string HollowKnightManagedFolder => InstallDirField.Text;
 
-        public LocalOverridesSetupForm()
+        public LocalOverridesSetupForm(HKSettings settings)
         {
             InitializeComponent();
+
+            InstallDirField.DataBindings.Add(new Binding(nameof(InstallDirField.Text), settings, nameof(settings.HKManagedPath)));
+            InstallDirField.Text = settings.HKManagedPath;
         }
 
         private void BrowseButton_Click(object sender, EventArgs e)
@@ -29,7 +32,6 @@ namespace HKModWizard.LocalOverridesSetup
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            Properties.Settings.Default.Save();
             Close();
         }
 

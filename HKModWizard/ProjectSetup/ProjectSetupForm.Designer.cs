@@ -103,14 +103,12 @@
             // 
             // AuthorField
             // 
-            this.AuthorField.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::HKModWizard.Properties.Settings.Default, "Author", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AuthorField.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AuthorField.Location = new System.Drawing.Point(160, 4);
             this.AuthorField.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.AuthorField.Name = "AuthorField";
             this.AuthorField.Size = new System.Drawing.Size(467, 26);
             this.AuthorField.TabIndex = 4;
-            this.AuthorField.Text = global::HKModWizard.Properties.Settings.Default.Author;
             // 
             // DescriptionField
             // 
@@ -125,9 +123,7 @@
             // UseNullablesCheckbox
             // 
             this.UseNullablesCheckbox.AutoSize = true;
-            this.UseNullablesCheckbox.Checked = global::HKModWizard.Properties.Settings.Default.UseNullables;
             this.UseNullablesCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.UseNullablesCheckbox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::HKModWizard.Properties.Settings.Default, "UseNullables", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.UseNullablesCheckbox.Location = new System.Drawing.Point(633, 112);
             this.UseNullablesCheckbox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.UseNullablesCheckbox.Name = "UseNullablesCheckbox";
@@ -138,14 +134,12 @@
             // 
             // InstallFolderField
             // 
-            this.InstallFolderField.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::HKModWizard.Properties.Settings.Default, "HollowKnightManagedFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.InstallFolderField.Dock = System.Windows.Forms.DockStyle.Fill;
             this.InstallFolderField.Location = new System.Drawing.Point(160, 72);
             this.InstallFolderField.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.InstallFolderField.Name = "InstallFolderField";
             this.InstallFolderField.Size = new System.Drawing.Size(467, 26);
             this.InstallFolderField.TabIndex = 7;
-            this.InstallFolderField.Text = global::HKModWizard.Properties.Settings.Default.HollowKnightManagedFolder;
             // 
             // InstallFolderBrowseButton
             // 

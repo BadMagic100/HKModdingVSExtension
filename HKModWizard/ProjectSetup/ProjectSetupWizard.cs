@@ -1,6 +1,9 @@
 ﻿using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.OLE.Interop;
+using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Settings;
 using Microsoft.VisualStudio.TemplateWizard;
 using System.Collections.Generic;
 using System.IO;
@@ -56,12 +59,14 @@ namespace HKModWizard.ProjectSetup
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             dte = (DTE2)automationObject;
+            ServiceProvider serviceProvider = new ServiceProvider((IServiceProvider)automationObject);
+            WritableSettingsStore settingsStore = new ShellSettingsManager(serviceProvider).GetWritableSettingsStore(SettingsScope.UserSettings);
 
             string solutionDir = replacementsDictionary["$solutiondirectory$"];
             buildYmlTargetPath = Path.Combine(solutionDir, ".github", "workflows", "build.yml");
             readmeTargetPath = Path.Combine(solutionDir, "README.md");
 
-            ProjectSetupForm input = new ProjectSetupForm();
+            ProjectSetupForm input = new ProjectSetupForm(new HKSettings(settingsStore));
             input.ShowDialog();
 
             replacementsDictionary.Add("$hkmanaged$", input.HollowKnightManagedFolder);

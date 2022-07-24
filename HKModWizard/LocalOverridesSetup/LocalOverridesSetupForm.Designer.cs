@@ -68,14 +68,12 @@
             // 
             // InstallDirField
             // 
-            this.InstallDirField.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::HKModWizard.Properties.Settings.Default, "HollowKnightManagedFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.InstallDirField.Dock = System.Windows.Forms.DockStyle.Fill;
             this.InstallDirField.Location = new System.Drawing.Point(160, 4);
             this.InstallDirField.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.InstallDirField.Name = "InstallDirField";
             this.InstallDirField.Size = new System.Drawing.Size(641, 26);
             this.InstallDirField.TabIndex = 1;
-            this.InstallDirField.Text = global::HKModWizard.Properties.Settings.Default.HollowKnightManagedFolder;
             // 
             // BrowseButton
             // 

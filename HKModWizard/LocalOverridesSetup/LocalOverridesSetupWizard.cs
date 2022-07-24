@@ -1,4 +1,8 @@
 ﻿using EnvDTE;
+using Microsoft.VisualStudio.OLE.Interop;
+using Microsoft.VisualStudio.Settings;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Settings;
 using Microsoft.VisualStudio.TemplateWizard;
 using System.Collections.Generic;
 
@@ -24,7 +28,11 @@ namespace HKModWizard.LocalOverridesSetup
 
         public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams)
         {
-            LocalOverridesSetupForm input = new LocalOverridesSetupForm();
+            ThreadHelper.ThrowIfNotOnUIThread();
+            ServiceProvider serviceProvider = new ServiceProvider((IServiceProvider)automationObject);
+            WritableSettingsStore settingsStore = new ShellSettingsManager(serviceProvider).GetWritableSettingsStore(SettingsScope.UserSettings);
+
+            LocalOverridesSetupForm input = new LocalOverridesSetupForm(new HKSettings(settingsStore));
             input.ShowDialog();
 
             replacementsDictionary.Add("$hkmanaged$", input.HollowKnightManagedFolder);

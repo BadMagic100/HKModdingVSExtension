@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="build.yml" />
-    <None Include="ModClass.cs" />
+    <None Include="ModClass.cs.template" />
     <None Include="LocalOverrides.targets" />
     <None Include="ProjectTemplate.csproj" />
     <None Include="README.md" />
@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="gitignore.template" />
-    <VSTemplate Include="HKLocalTargets.vstemplate" />
+    <None Include="HKLocalTargets.vstemplate" />
     <Content Include="omegamaggotprime.ico" />
   </ItemGroup>
   <ItemGroup />

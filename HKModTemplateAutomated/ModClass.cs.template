@@ -14,7 +14,7 @@ namespace $safeprojectname$
 			{
 				if (_instance == null)
 				{
-					throw new InvalidOperationException($"{nameof($safeitemname$)} was never initialized");
+					throw new InvalidOperationException($"{An instance of nameof($safeitemname$)} was never constructed");
 				}
 				return _instance;
 			}

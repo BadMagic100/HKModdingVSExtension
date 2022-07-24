@@ -9,6 +9,7 @@
         <Description>$desc$</Description>
         <Copyright>Copyright © $author$ $year$</Copyright>
         <Authors>$author$</Authors>
+        <NoWarn>7035</NoWarn>
         <AssemblyVersion>0.1.*</AssemblyVersion>
         <Deterministic>false</Deterministic>
         <OutputPath>bin\$(Configuration)\</OutputPath>

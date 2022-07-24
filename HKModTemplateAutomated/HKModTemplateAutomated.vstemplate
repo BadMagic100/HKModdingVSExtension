@@ -18,7 +18,7 @@
     </TemplateData>
     <TemplateContent>
         <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
-            <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="$safeprojectname$.cs">ModClass.cs</ProjectItem>
+            <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="$safeprojectname$.cs">ModClass.cs.template</ProjectItem>
             <ProjectItem ReplaceParameters="true">LocalOverrides.targets</ProjectItem>
             <ProjectItem TargetFileName=".gitignore">gitignore.template</ProjectItem>
             <ProjectItem ReplaceParameters="true">README.md</ProjectItem>

@@ -9,11 +9,11 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{DBB69944-4985-4EF4-9FC4-D8346907BDA1}</ProjectGuid>
+    <ProjectGuid>{51E5C12B-63D2-4D3A-A25E-37A8D5801960}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HKModTemplateAutomated</RootNamespace>
-    <AssemblyName>HKModTemplateAutomated</AssemblyName>
+    <RootNamespace>HKLocalTargets</RootNamespace>
+    <AssemblyName>HKLocalTargets</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
@@ -57,20 +57,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build.yml" />
-    <None Include="ModClass.cs.template" />
     <None Include="LocalOverrides.targets" />
-    <None Include="ProjectTemplate.csproj" />
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="HKModTemplateAutomated.vstemplate" />
+    <VSTemplate Include="HKLocalTargets.vstemplate" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="gitignore.template" />
     <Content Include="omegamaggotprime.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Modding;
 
 namespace $safeprojectname$
 {
-	public class $safeitemname$: Mod
+	public class $safeitemname$Mod: Mod
 	{
 		$if$ ($usenullableannotations$ == enable)private static $safeitemname$? _instance;
 		$else$private static $safeitemname$ _instance;

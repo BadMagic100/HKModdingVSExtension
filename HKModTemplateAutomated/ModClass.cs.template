@@ -22,7 +22,7 @@ namespace $safeprojectname$
 
 		public override string GetVersion() => GetType().Assembly.GetName().Version.ToString();
 		
-		public $safeitemname$() : base()
+		public $safeitemname$() : base("$safeitemname$")
 		{
 			_instance = this;
 		}

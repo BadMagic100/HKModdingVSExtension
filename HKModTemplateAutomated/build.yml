@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup MAPI
         uses: BadMagic100/setup-hk@v1
@@ -29,7 +29,7 @@ jobs:
           #dependencyFilePath: $projectname$/ModDependencies.txt
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
       
       - name: Install dependencies
         run: dotnet restore
@@ -38,7 +38,7 @@ jobs:
         run: dotnet build -c Release
 
       - name: Prepare artifacts for release
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Publish
           path: $projectname$/bin/Publish
@@ -50,7 +50,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.should_release == 'true'
     steps:
       - name: Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: artifacts
       - name: Get build details
@@ -60,8 +60,8 @@ jobs:
         run: |
           $sha = Get-Content artifacts/Publish/SHA.txt
           $ver = Get-Content artifacts/Publish/VERSION.txt
-          echo "::set-output name=archiveHash::$sha"
-          echo "::set-output name=buildVersion::$ver"
+          echo "archiveHash=$sha" >>$GITHUB_OUTPUT
+          echo "buildVersion=$ver" >>$GITHUB_OUTPUT
       - name: Release
         uses: softprops/action-gh-release@v1
         with:

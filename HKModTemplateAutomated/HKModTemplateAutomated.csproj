@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="build.yml" />
+    <None Include="dependabot.yml" />
     <None Include="ModClass.cs.template" />
     <None Include="LocalOverrides.targets" />
     <None Include="ProjectTemplate.csproj" />

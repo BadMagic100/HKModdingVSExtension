@@ -23,6 +23,7 @@
             <ProjectItem TargetFileName=".gitignore">gitignore.template</ProjectItem>
             <ProjectItem ReplaceParameters="true">README.md</ProjectItem>
             <ProjectItem ReplaceParameters="true">build.yml</ProjectItem>
+            <ProjectItem ReplaceParameters="true">dependabot.yml</ProjectItem>
         </Project>
     </TemplateContent>
     <WizardExtension>

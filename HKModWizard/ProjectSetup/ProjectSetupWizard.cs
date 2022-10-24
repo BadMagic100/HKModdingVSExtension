@@ -15,6 +15,7 @@ namespace HKModWizard.ProjectSetup
         DTE2 dte;
 
         string buildYmlTargetPath;
+        string dependabotYmlTargetPath;
         string readmeTargetPath;
 
         public void BeforeOpeningFile(ProjectItem projectItem)
@@ -45,6 +46,13 @@ namespace HKModWizard.ProjectSetup
             Directory.CreateDirectory(Path.GetDirectoryName(buildYmlTargetPath));
             File.Move(buildYmlCurrentPath, buildYmlTargetPath);
             folderProj.ProjectItems.AddFromFile(buildYmlTargetPath);
+
+            ProjectItem dependabotYml = sln.FindProjectItem("dependabot.yml");
+            string dependabotYmlCurrentPath = dependabotYml.FileNames[0];
+            dependabotYml.Remove();
+            Directory.CreateDirectory(Path.GetDirectoryName(dependabotYmlTargetPath));
+            File.Move(dependabotYmlCurrentPath, dependabotYmlTargetPath);
+            folderProj.ProjectItems.AddFromFile(dependabotYmlTargetPath);
         }
 
         public void ProjectItemFinishedGenerating(ProjectItem projectItem)
@@ -63,6 +71,7 @@ namespace HKModWizard.ProjectSetup
             WritableSettingsStore settingsStore = new ShellSettingsManager(serviceProvider).GetWritableSettingsStore(SettingsScope.UserSettings);
 
             string solutionDir = replacementsDictionary["$solutiondirectory$"];
+            dependabotYmlTargetPath = Path.Combine(solutionDir, ".github", "dependabot.yml");
             buildYmlTargetPath = Path.Combine(solutionDir, ".github", "workflows", "build.yml");
             readmeTargetPath = Path.Combine(solutionDir, "README.md");
 

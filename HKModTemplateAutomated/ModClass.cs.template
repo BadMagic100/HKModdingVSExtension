@@ -5,16 +5,16 @@ namespace $safeprojectname$
 {
 	public class $safeitemname$Mod: Mod
 	{
-		$if$ ($usenullableannotations$ == enable)private static $safeitemname$? _instance;
-		$else$private static $safeitemname$ _instance;
+		$if$ ($usenullableannotations$ == enable)private static $safeitemname$Mod? _instance;
+		$else$private static $safeitemname$Mod _instance;
 	    $endif$
-		internal static $safeitemname$ Instance
+		internal static $safeitemname$Mod Instance
 		{
 			get
 			{
 				if (_instance == null)
 				{
-					throw new InvalidOperationException($"An instance of {nameof($safeitemname$)} was never constructed");
+					throw new InvalidOperationException($"An instance of {nameof($safeitemname$Mod)} was never constructed");
 				}
 				return _instance;
 			}
@@ -22,7 +22,7 @@ namespace $safeprojectname$
 
 		public override string GetVersion() => GetType().Assembly.GetName().Version.ToString();
 		
-		public $safeitemname$() : base("$safeitemname$")
+		public $safeitemname$Mod() : base("$safeitemname$")
 		{
 			_instance = this;
 		}

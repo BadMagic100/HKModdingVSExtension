@@ -239,7 +239,7 @@ namespace HKModWizard.ModDependenciesCommand
                     }
 
                     string textContent = string.Join(Environment.NewLine, form.ModDependencies);
-                    using (FileStream fs = File.OpenWrite(depsItemPath))
+                    using (FileStream fs = File.Open(depsItemPath, FileMode.Create))
                     {
                         using (StreamWriter sw = new StreamWriter(fs))
                         {

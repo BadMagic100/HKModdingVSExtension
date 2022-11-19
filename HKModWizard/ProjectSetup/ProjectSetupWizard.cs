@@ -1,12 +1,19 @@
 ﻿using EnvDTE;
 using EnvDTE80;
-using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Settings;
 using Microsoft.VisualStudio.TemplateWizard;
+using NuGet.Common;
+using NuGet.Protocol;
+using NuGet.Protocol.Core.Types;
+using NuGet.Versioning;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace HKModWizard.ProjectSetup
 {
@@ -63,11 +70,30 @@ namespace HKModWizard.ProjectSetup
         {
         }
 
+        private async Task<string> GetLatestPolySharpAsync()
+        {
+            ILogger logger = NullLogger.Instance;
+            CancellationTokenSource src = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            SourceCacheContext ctx = new SourceCacheContext();
+            SourceRepository repo = Repository.Factory.GetCoreV3("https://api.nuget.org/v3/index.json");
+            try
+            {
+                FindPackageByIdResource resource = await repo.GetResourceAsync<FindPackageByIdResource>();
+                IEnumerable<NuGetVersion> versions = await resource.GetAllVersionsAsync(
+                                "PolySharp", ctx, logger, src.Token);
+                return versions.Where(v => !v.IsPrerelease).Max().ToString();
+            }
+            catch (OperationCanceledException)
+            {
+                return null;
+            }
+        }
+
         public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             dte = (DTE2)automationObject;
-            ServiceProvider serviceProvider = new ServiceProvider((IServiceProvider)automationObject);
+            ServiceProvider serviceProvider = new ServiceProvider((Microsoft.VisualStudio.OLE.Interop.IServiceProvider)automationObject);
             WritableSettingsStore settingsStore = new ShellSettingsManager(serviceProvider).GetWritableSettingsStore(SettingsScope.UserSettings);
 
             string solutionDir = replacementsDictionary["$solutiondirectory$"];
@@ -82,6 +108,21 @@ namespace HKModWizard.ProjectSetup
             replacementsDictionary.Add("$usenullableannotations$", input.Nullable ? "enable" : "disable");
             replacementsDictionary.Add("$author$", input.Author);
             replacementsDictionary.Add("$desc$", input.Description);
+
+            // enable it if we can find a version, and we actually opted in
+            replacementsDictionary.Add("$polyfilllanguagefeatures$", "disable");
+            if (input.Polyfill)
+            {
+                string version = ThreadHelper.JoinableTaskFactory.Run(async delegate
+                {
+                    return await GetLatestPolySharpAsync();
+                });
+                if (version != null)
+                {
+                    replacementsDictionary["$polyfilllanguagefeatures$"] = "enable";
+                    replacementsDictionary.Add("$polysharpversion$", version);
+                }
+            }
         }
 
         public bool ShouldAddProjectItem(string filePath)

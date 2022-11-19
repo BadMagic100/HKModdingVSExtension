@@ -10,6 +10,7 @@ namespace HKModWizard.ProjectSetup
         public string Description => DescriptionField.Text;
         public string HollowKnightManagedFolder => InstallFolderField.Text;
         public bool Nullable => UseNullablesCheckbox.Checked;
+        public bool Polyfill => PolyfillCheckbox.Checked;
 
         public ProjectSetupForm(HKSettings settings)
         {
@@ -26,6 +27,10 @@ namespace HKModWizard.ProjectSetup
             UseNullablesCheckbox.DataBindings.Add(new Binding(nameof(UseNullablesCheckbox.Checked), settings, nameof(settings.UseNullables),
                 false, DataSourceUpdateMode.OnPropertyChanged));
             UseNullablesCheckbox.Checked = settings.UseNullables;
+
+            PolyfillCheckbox.DataBindings.Add(new Binding(nameof(PolyfillCheckbox.Checked), settings, nameof(settings.PolyfillLanguageFeatures),
+                false, DataSourceUpdateMode.OnPropertyChanged));
+            PolyfillCheckbox.Checked = settings.PolyfillLanguageFeatures;
         }
 
         private void Submit_Click(object sender, EventArgs e)

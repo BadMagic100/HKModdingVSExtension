@@ -13,9 +13,9 @@ namespace HKModWizard
             return settings.GetString(path, property, "");
         }
 
-        private bool GetBool([CallerMemberName]string property = null)
+        private bool GetBool(bool defaultValue, [CallerMemberName]string property = null)
         {
-            return settings.GetBoolean(path, property, true);
+            return settings.GetBoolean(path, property, defaultValue);
         }
 
         private void SetValue<T>(T value, [CallerMemberName]string property = null)
@@ -52,7 +52,13 @@ namespace HKModWizard
 
         public bool UseNullables
         {
-            get => GetBool();
+            get => GetBool(defaultValue: true);
+            set => SetValue(value);
+        }
+
+        public bool PolyfillLanguageFeatures
+        {
+            get => GetBool(defaultValue: false);
             set => SetValue(value);
         }
 

@@ -319,6 +319,12 @@
         </Reference>
     </ItemGroup>
 
+    $if$ ($polyfilllanguagefeatures$ == enable)
+    <ItemGroup>
+        <PackageReference Include="PolySharp" Version="$polysharpversion$" />
+    </ItemGroup>
+    $endif$
+
     <ItemGroup>
         <None Include=".gitignore"/>
         <None Include="LocalOverrides.targets"/>

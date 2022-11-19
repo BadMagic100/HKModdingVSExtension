@@ -27,7 +27,6 @@ namespace $safeprojectname$
 			_instance = this;
 		}
 
-		// if you need preloads, you will need to implement GetPreloadNames and use the other signature of Initialize.
 		public override void Initialize()
 		{
 			Log("Initializing");

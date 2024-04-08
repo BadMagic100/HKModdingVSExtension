@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "Microsoft.VisualStudio.SDK"
+      - dependency-name: "Microsoft.VSSDK.BuildTools"
+  - package-ecosystem: "github-actions"
+    directory: "/HKModTemplateAutomated"
+    schedule:
+      interval: "weekly"

@@ -16,11 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Setup Nuget
-      uses: nuget/setup-nuget@v2
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v2
-    - name: Restore dependencies
-      run: nuget restore
+    - name: Setup .NET build dependencies
+      uses: timheuer/bootstrap-dotnet@v1
+      with:
+        nuget: 'false'
+        sdk: 'false'
+        msbuild: 'true'
     - name: Build
-      run: msbuild /p:Configuration=Release /p:DeployExtension=false
+      run: msbuild -restore /p:Configuration=Release /p:DeployExtension=false

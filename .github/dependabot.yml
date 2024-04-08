@@ -7,6 +7,7 @@ updates:
     ignore:
       - dependency-name: "Microsoft.VisualStudio.SDK"
       - dependency-name: "Microsoft.VSSDK.BuildTools"
+      - dependency-name: "Microsoft.Build"
   - package-ecosystem: "github-actions"
     directory: "/HKModTemplateAutomated"
     schedule:

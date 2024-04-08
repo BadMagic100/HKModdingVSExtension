@@ -21,4 +21,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: msbuild HKModTemplateAutomated.sln /property:Configuration=Release

@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET build dependencies
-      uses: timheuer/bootstrap-dotnet@v1
+      uses: timheuer/bootstrap-dotnet@v2
       with:
         nuget: 'false'
         sdk: 'false'

@@ -23,4 +23,4 @@ jobs:
         sdk: 'false'
         msbuild: 'true'
     - name: Build
-      run: msbuild -restore /p:Configuration=Release /p:DeployExtension=false
+      run: msbuild -restore /v:m /p:Configuration=Release /p:DeployExtension=false

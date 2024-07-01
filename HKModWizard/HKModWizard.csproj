@@ -116,7 +116,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="NuGet.Protocol">
-      <Version>6.10.0</Version>
+      <Version>6.10.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -55,6 +55,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.should_release == 'true'
         uses: actions/attest-build-provenance@v2
         with:
+          name: Publish
           subject-path: $projectname$/bin/Publish/$safeprojectname$.zip
   release:
     needs:
@@ -64,9 +65,10 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.should_release == 'true'
     steps:
       - name: Download Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
-          path: artifacts
+          name: Publish
+          path: artifacts/Publish
       - name: Get build details
         id: details
         # this assumes that an MSBuild task writes the mod version (usually the same as the assembly version) 

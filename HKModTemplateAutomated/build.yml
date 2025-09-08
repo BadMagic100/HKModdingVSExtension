@@ -53,7 +53,7 @@ jobs:
       - name: Generate attestation
         id: attest
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.should_release == 'true'
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v3
         with:
           name: Publish
           subject-path: $projectname$/bin/Publish/$safeprojectname$.zip

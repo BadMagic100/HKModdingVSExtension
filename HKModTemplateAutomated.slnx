@@ -1,0 +1,15 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="HKLocalTargets/HKLocalTargets.csproj" Id="51e5c12b-63d2-4d3a-a25e-37a8d5801960">
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="HKModTemplateAutomated/HKModTemplateAutomated.csproj" Id="dbb69944-4985-4ef4-9fc4-d8346907bda1">
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="HKModWizard/HKModWizard.csproj" Id="3569d557-ba7c-40bf-971a-6eb3c65ba773">
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+</Solution>
